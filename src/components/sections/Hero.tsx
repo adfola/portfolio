@@ -2,11 +2,11 @@ import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, Github, Linkedin, Mail, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import SplitText from '@/components/ui/split-text';
 import NeonText3D from '@/components/3d/NeonText3D';
 import VariableProximity from '@/components/ui/VariableProximity';
 import DecryptedText from '@/components/ui/DecryptedText';
 import RotatingText from '@/components/ui/RotatingText';
+import { personalInfo } from '@/data/personalInfo';
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -142,23 +142,28 @@ export default function Hero() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-primary/50 hover:bg-primary/10 cursor-target w-full"
-                onClick={() => window.open('/resume.pdf', '_blank')}
+              <a
+                href={personalInfo.resumePath}
+                download={personalInfo.resumeFileName}
+                className="cursor-target w-full"
               >
-                <Download className="mr-2 h-4 w-4" />
-                <VariableProximity
-                  label="Download Resume"
-                  fromFontVariationSettings="'wght' 400"
-                  toFontVariationSettings="'wght' 700"
-                  containerRef={containerRef}
-                  radius={80}
-                  falloff="linear"
-                  className="inline-block"
-                />
-              </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-primary/50 hover:bg-primary/10 cursor-target w-full gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  <VariableProximity
+                    label="Download Resume"
+                    fromFontVariationSettings="'wght' 400"
+                    toFontVariationSettings="'wght' 700"
+                    containerRef={containerRef}
+                    radius={80}
+                    falloff="linear"
+                    className="inline-block"
+                  />
+                </Button>
+              </a>
             </motion.div>
           </motion.div>
 
@@ -170,9 +175,9 @@ export default function Hero() {
             className="flex justify-center space-x-6"
           >
             {[
-              { icon: Github, href: 'https://github.com/adfola', label: "Github" },
-              { icon: Linkedin, href: 'https://linkedin.com/in/adekola-folarin', label: 'LinkedIn' },
-              { icon: Mail, href: 'mailto:adekolafolarin62@gmail.com', label: 'Email' },
+              { icon: Github, href: personalInfo.social.github, label: "Github" },
+              { icon: Linkedin, href: personalInfo.social.linkedin, label: 'LinkedIn' },
+              { icon: Mail, href: personalInfo.social.email, label: 'Email' },
             ].map((social, index) => {
               const Icon = social.icon;
               return (
